@@ -1,0 +1,69 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define MAX 20
+
+void swap(int index,int swap_index,int array[])
+{
+    int temp;
+    temp = array[index];
+    array[index] = array[swap_index];
+    array[swap_index] = temp;
+}
+
+
+void max_heapify(int array[], int index, int heapSize){
+  /* add your code here */
+    int children1 = (2 * index)+1 ;
+    int children2 = (2 * index)+2;
+    int largest_element = array[index];
+    int swap_index = 0;
+    
+    if(children1 < heapSize && largest_element < array[children1])
+    {
+        largest_element = array[children1];
+        swap_index = (2 * index)+1 ;
+    } 
+    
+    if(children2 < heapSize && largest_element < array[children2])
+    {
+        largest_element = array[children2];
+        swap_index = (2 * index)+2 ;
+    }        
+    
+    if(largest_element != array[index])
+    {
+        swap(index,swap_index,array);
+        max_heapify(array, swap_index, heapSize);
+        
+    }
+    
+}
+
+int* build_max_heap(int array[], int arraySize){
+    int j;
+    for (j = arraySize/2; j >= 0; j--) {
+        max_heapify(array, j, arraySize);
+    }
+    return array;
+}
+
+void display(int *max_heap, int arraySize){
+	int counter;
+    for (counter = 0; counter < arraySize; counter++) {
+        printf("%d ", max_heap[counter]);
+    }
+}
+
+int main(){
+    int index, arraySize;
+	int *array = calloc(MAX, sizeof(int));
+    int *max_heap = calloc(MAX, sizeof(int));
+    
+    scanf("%d", &arraySize);
+    
+    for (index = 0; index < arraySize; index++) {
+        scanf("%d", &array[index]);
+    }
+    max_heap = build_max_heap(array, arraySize);
+    display(max_heap, arraySize);
+}
