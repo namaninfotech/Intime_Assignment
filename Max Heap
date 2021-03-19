@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include<conio.h>
 #define MAX 20
 
 void swap(int index,int swap_index,int array[])
